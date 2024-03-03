@@ -1,0 +1,61 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+class Task {
+public:
+    string description;
+    bool completed;
+
+    Task(const string& desc) : description(desc), completed(false) {}
+
+    ~Task() = default;
+};
+class ToDoList {
+private:
+    vector<Task> tasks;
+
+public:
+    void addTask(const string& desc) {
+        tasks.push_back(Task(desc));
+    }
+
+    void listTasks() const {
+        if (tasks.empty()) {
+            cout << "No tasks added yet." << endl;
+            return;
+        }
+
+        cout << "Tasks:" << endl;
+        for (int i = 0; i < tasks.size(); ++i) {
+            cout << i + 1 << ". " << (tasks[i].completed ? "[Completed]" : "[Pending]") << " " << tasks[i].description << endl;
+        }
+    }
+
+    void markCompleted(int task_index) {
+        if (tasks.empty()) {
+            cout << "No tasks to mark as completed." << endl;
+            return;
+        }
+
+        if (0 <= task_index && task_index < tasks.size()) {
+            tasks[task_index].completed = true;
+            cout << "Task '" << tasks[task_index].description << "' marked as completed." << endl;
+        }
+        else {
+            cout << "Invalid task index: " << task_index << endl;
+        }
+    }
+};
+int main() {
+    ToDoList myList;
+    myList.addTask("Finish Lab 3");
+    myList.addTask("Buy groceries");
+    myList.addTask("Clean the room");
+    myList.listTasks();
+    myList.markCompleted(1);
+    myList.listTasks();
+    return 0;
+    system("pause");
+}
